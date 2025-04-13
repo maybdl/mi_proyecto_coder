@@ -6,10 +6,17 @@ class ProductoForm(forms.ModelForm):
         model = Producto
         fields = '__all__'
 
+
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
         fields = '__all__'
+
+def clean_nombre(self):
+    nombre = self.cleaned_data['nombre']
+    if Categoria.objects.filter(nombre__iexact=nombre).exists():
+        raise forms.ValidationError("Esta categoría ya existe.")
+    return nombre
 
 class ClienteForm(forms.ModelForm):
     class Meta:

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import ProductoForm, CategoriaForm, ClienteForm, BuscarProductoForm
 from .models import Producto
+from django.shortcuts import redirect
 
 def index(request):
     return render(request, 'myapp/index.html')
@@ -19,6 +20,7 @@ def crear_categoria(request):
         form = CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('index')
     else:
         form = CategoriaForm()
     return render(request, 'myapp/formulario.html', {'form': form, 'titulo': 'Categoría'})
